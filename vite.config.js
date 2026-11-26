@@ -42,7 +42,13 @@ export default defineConfig({
     }),
     // No inspector: a restarted dev server would race the old one for port 9229 and crash.
     cloudflare({ viteEnvironment: { name: "ssr" }, inspectorPort: false }),
-    tanstackStart({ srcDirectory: "src" }),
+    // Entries are declared explicitly so the plugin never has to guess the
+    // router/start file names (this project is JavaScript, not TypeScript).
+    tanstackStart({
+      srcDirectory: "src",
+      router: { entry: "router.jsx" },
+      start: { entry: "start.js" },
+    }),
     react(),
   ],
 });
